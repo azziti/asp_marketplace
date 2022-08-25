@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "Products";
+    Layout = "~/Views/Shared/_LayoutPageDashboard2.cshtml";
+}
+
+
+
+<div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+    <div class="input-group-append">
+        <button class="btn btn-primary" type="button">Button</button>
+    </div>
+</div>
+
+
+
+
+<div class="row">
+
+
+    @foreach (var item in ViewBag.MyList)
+    {
+
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card card-social">
+                <div class="card-block border-bottom">
+                    <div class="row align-items-center justify-content-center">
+                        <div class="col-auto">
+                            <img class="rounded-circle" style="width:40px;" src="@Url.Content("~/Content/assets/images/user/avatar-2.jpg")" alt="activity-user">
+                        </div>
+                        <div class="col text-right">
+                            <h3>  @item.price DH</h3>
+                            <h5 class="text-c-purple mb-0"> La Date:  <span class="text-muted"> @item.createdAt </span>  </h5>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    }
+
+    </div>
+
+
+

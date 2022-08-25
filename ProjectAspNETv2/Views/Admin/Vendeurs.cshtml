@@ -1,0 +1,299 @@
+﻿
+
+
+@{
+    ViewBag.Title = "Vendeurs";
+    Layout = "~/Views/Shared/_LayoutPageDashboard1.cshtml";
+
+}
+
+
+
+<div class="col-xl-12 col-md-12 m-b-30">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Liste des utilisateurs avec problemes</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link " id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Liste noire</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">Liste favoris</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link active show" id="contact-tab" data-toggle="tab" href="#contact2" role="tab" aria-controls="contact" aria-selected="false">Tous les utilisateurs</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Proprietaire</th>
+                        <th>Email</th>
+                        <th>Subject</th>
+                        <th>Message</th>
+                        
+                    </tr>
+                </thead>
+                <tbody>
+
+                    
+                            @foreach (var item in ViewBag.ProbList as IList<ProjectAspNETv2.Models.ContactSupport>) {
+
+                    <tr>
+                        <td>
+                            <a href="/Proprietaires/Details/1"> <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="@Url.Content(@item.Proprietaire.Logo)" alt="activity-user">  @item.Proprietaire.Name   </h6>   </a>
+                        </td>
+                        <td>
+                            <h6 class="m-0">  @item.Email</h6>
+                        </td>
+                        <td>
+                            <h6 class="m-0"> @item.subject</h6>
+                        </td>
+                        <td>
+                            <h6 class="m-0 text-c-green"> @item.message </h6>
+                        </td>
+                        <td class="text-right"><i class="fas fa-circle text-c-green f-10"></i></td>
+
+                        <td>
+                            
+                            @using (Html.BeginForm("DeleteMessageSupport", "Admin", FormMethod.Post))
+                            {
+                                <input type="hidden" name="id" id="id" value="@item.Id" />
+
+
+
+                                <input class="label theme-bg2 text-white f-12" type="submit" value="Regler" />
+
+
+                            }
+
+
+                        </td>
+                        <td>  <a  href="/Admin/Message/@item.Id"> voir </a> </td>
+                    </tr>
+                            }
+                            
+                       
+
+
+
+                </tbody>
+            </table>
+
+        </div>
+
+        <div class="tab-pane fade " id="profile" role="tabpanel" aria-labelledby="profile-tab">
+           
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Proprietaire</th>
+                        <th>isCompany</th>
+                        <th>Tel</th>
+                        <th>Ville</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item2 in ViewBag.MyList2)
+                    {
+
+
+                        <tr>
+                            <td>
+                                <a href="/Proprietaires/Details/1"> <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="@Url.Content(@item2.Logo)" alt="activity-user"> @item2.Name </h6>   </a>
+                            </td>
+                            <td>
+                                <h6 class="m-0">  @item2.isCompany</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0"> @item2.Tel</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0 text-c-green"> @item2.Ville </h6>
+                            </td>
+                            <td class="text-right"><i class="fas fa-circle text-c-green f-10"></i></td>
+
+                            <td>
+                                @using (Html.BeginForm("BD", "Admin", FormMethod.Post))
+                                {
+
+                                   
+
+                                    if (@item2.isBlocked == true)
+                                    {
+                                        <input type="hidden" name="id" id="id2" value="@item2.Id" />
+
+                                        <input type="hidden" name="etat" id="etst" value="isBloc" />
+
+                                        <input class="label theme-bg2 text-white f-12" type="submit" value="Debloquer" />
+                                    }
+
+
+                                }
+                            </td>
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+
+        </div>
+        <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+            
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Proprietaire</th>
+                        <th>isCompany</th>
+                        <th>Tel</th>
+                        <th>Ville</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                    @foreach (var item2 in ViewBag.MyList3)
+                    {
+
+
+                        <tr>
+                            <td>
+                                <a href="/Proprietaires/Details/1"> <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="@Url.Content(@item2.Logo)" alt="activity-user"> @item2.Name </h6>   </a>
+                            </td>
+                            <td>
+                                <h6 class="m-0">  @item2.isCompany</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0"> @item2.Tel)</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0 text-c-green"> @item2.Ville </h6>
+                            </td>
+                            <td class="text-right"><i class="fas fa-circle text-c-green f-10"></i></td>
+
+                            <td>
+
+                                @using (Html.BeginForm("HD", "Admin", FormMethod.Post))
+                                {
+
+
+
+                                    if (@item2.isHonored == true)
+                                    {
+                                        <input type="hidden" name="id" id="id2" value="@item2.Id" />
+
+                                        <input type="hidden" name="etat" id="etst" value="isHon" />
+
+                                        <input class="label theme-bg2 text-white f-12" type="submit" value="Retirer" />
+                                    }
+
+
+                                }
+
+                            </td>
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade active show" id="contact2" role="tabpanel" aria-labelledby="contact-tab">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Proprietaire</th>
+                        <th>isCompany</th>
+                        <th>Tel</th>
+                        <th>Ville</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+
+
+
+                    @foreach (var item in ViewBag.MyList)
+                    {
+
+
+                        <tr>
+                            <td>
+                                <a href="/Proprietaires/Details/1"> <h6 class="m-0"><img class="rounded-circle m-r-10" style="width:40px;" src="@Url.Content(@item.Logo)" alt="activity-user"> @item.Name </h6>   </a>
+                            </td>
+                            <td>
+                                <h6 class="m-0">  @item.isCompany</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0"> @item.Tel)</h6>
+                            </td>
+                            <td>
+                                <h6 class="m-0 text-c-green"> @item.Ville </h6>
+                            </td>
+                            <td class="text-right"><i class="fas fa-circle text-c-green f-10"></i></td>
+
+                            
+
+                            <td>
+
+
+
+                                @using (Html.BeginForm("BD", "Admin", FormMethod.Post))
+                                {
+
+                                    if (@item.isBlocked == true)
+                                    {
+                                        <input type="hidden" name="id" id="id2" value="@item.Id" />
+
+                                        <input type="hidden" name="etat" id="etst" value="isBloc" />
+
+
+                                        <input class="label theme-bg2 text-white f-12" type="submit" value="Debloquer" />
+                                    }
+
+                                    if (@item.isBlocked == false)
+                                    {
+                                        <input type="hidden" name="id" id="id2" value="@item.Id" />
+
+                                        <input type="hidden" name="etat" id="etst" value="isDBloc" />
+
+                                        <input class="label theme-bg2 text-white f-12" type="submit" value="Bloquer" />
+                                    }
+
+
+                                }
+
+                                @using (Html.BeginForm("HD", "Admin", FormMethod.Post))
+                                {
+
+
+
+                                    if (@item.isHonored == false)
+                                    {
+                                        <input type="hidden" name="id" id="id2" value="@item.Id" />
+
+                                        <input type="hidden" name="etat" id="etst" value="isNHon" />
+
+                                        <input class="label theme-bg2 text-white f-12" type="submit" value="Add fovoris" />
+                                    }
+
+
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+

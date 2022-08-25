@@ -1,0 +1,101 @@
+﻿
+@{
+    ViewBag.Title = "Historique";
+    Layout = "~/Views/Shared/_LayoutPageDashboard1.cshtml";
+}
+
+
+
+
+
+<!--[ Recent Users ] start-->
+<div class="col-xl-12 col-md-12">
+    <div class="card Recent-Users">
+        <div class="card-header">
+            <h5>Historique des produits</h5>
+        </div>
+        <div class="card-block px-0 py-3">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr class="unread">
+                            <td>  #  </td>
+                            <td>
+                                <h6 class="mb-1"> Proprietaire </h6>
+
+                            </td>
+                            <td>
+                                <h6 class="mb-1"> # </h6>
+
+                            </td>
+                            <td>
+                                <h6 class="mb-1"> Produit </h6>
+
+                            </td>
+                            <td>
+                                <h6 class="text-muted">  Operation </h6>
+                            </td>
+                            <td>
+                                <h6 class="text-muted"> Date d'operation </h6>
+                            </td>
+                            <td>Action </td>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+
+
+                        @foreach (var item in ViewBag.Operations as IList<ProjectAspNETv2.Models.Historique>)
+                        {
+
+
+                            <tr class="unread">
+
+
+                                <td><img class="rounded-circle" style="width:40px;" src="@Url.Content(@item.Proprietaire.Logo)" alt="activity-user"></td>
+                                <td>
+                                    <h6 class="mb-1"> @item.Proprietaire.Name </h6>
+
+                                </td>
+                                
+
+                                <td><img class="rounded-circle" style="width:40px;" src="@Url.Content(@item.Produit.Images.First().PathName)" alt="activity-user"></td>
+                                <td>
+                                    <h6 class="mb-1"> @item.Produit.name </h6>
+                                    <p class="m-0">Lorem Ipsum is simply…</p>
+                                </td>
+                                <td>
+                                    <h6 class="text-muted"><i class="fas fa-circle text-c-green f-10 m-r-15"></i>@item.operation </h6>
+                                </td>
+                                <td>
+                                    <h6 class="text-muted"><i class="fas fa-circle text-c-green f-10 m-r-15"></i>@item.operation_date</h6>
+                                </td>
+                                <td>
+
+
+                                    @using (Html.BeginForm("DeleteOperation", "Admin", FormMethod.Post))
+                                    {
+                                        <input type="hidden" name="id" id="id" value="@item.Id" />
+
+                                        
+
+                                        <input class="label theme-bg2 text-white f-12" type="submit" value="Supprimer" />
+
+
+                                    }
+
+
+
+                                </td>
+                            </tr>
+
+                        }
+
+
+                        </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!--[ Recent Users ] end-->

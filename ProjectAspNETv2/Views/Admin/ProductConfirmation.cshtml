@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewBag.Title = "ProductConfirmation";
+    Layout = "~/Views/Shared/_LayoutPageDashboard1.cshtml";
+}
+
+
+
+
+
+
+
+<div class="row">
+
+
+    @foreach (var item in ViewBag.MyList as IList<ProjectAspNETv2.Models.Produit>)
+    {
+
+
+        <div class="col-md-6 col-xl-3">
+            <div class="card" style="width: 15rem;height:30rem">
+                <img class="card-img-top" src="@Url.Content(@item.Images.First().PathName)" alt="Card image cap">
+                <div class="card-body">
+                    <h4 class="card-title">@item.name</h4>
+                    <p class="card-text">
+
+                        @if (item.description_.Count() > 16)
+                        {@(item.description_.Substring(0,15)) <span>... </span>} @if (item.description_.Count() <= 16)
+                        {<span> @item.description_  </span>}
+
+                    </p>
+                    <div class="col text-right">
+                        <h4> @item.price DH</h4>
+                        <h6 class="text-c-purple mb-0">  <span class="text-muted">Vendeur:</span> @item.Proprietaire.Name </h6>
+                    </div>
+                    <a href="/Admin/Details/@item.Id" class="label theme-bg2 text-white f-12"> Details</a>
+
+                
+               
+                    <div style="margin: 10px" class="row align-items-center justify-content-center card-active">
+                        <div class="col-6">
+                            <h6 class="text-center m-b-10">
+
+                                @using (Html.BeginForm("Confirm_Reject_Product", "Admin", FormMethod.Post))
+                                {
+
+                                    <input type="hidden" name="id" id="id2" value="@item.Id" />
+
+                                    <input type="hidden" name="etat" id="etst" value="Confirm" />
+
+                                    <button type="submit" class="label theme-bg2 text-white f-12"> Confirmer</button>
+
+                                }
+                            </h6>
+
+                        </div>
+                        <div class="col-6">
+                            <h6 class="text-center  m-b-10">
+
+                                @using (Html.BeginForm("Confirm_Reject_Product", "Admin", FormMethod.Post))
+                                {
+                                    <input type="hidden" name="id" id="id2" value="@item.Id" />
+
+                                    <input type="hidden" name="etat" id="etst" value="Reject" />
+
+
+                                    <button type="submit" class="label theme-bg2 text-white f-12"> Rejeter</button>
+
+                                }
+                            </h6>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+           </div>
+
+            }
+
+
+        </div>
+
+
+

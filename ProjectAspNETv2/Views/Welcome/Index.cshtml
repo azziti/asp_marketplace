@@ -1,0 +1,513 @@
+﻿@model IEnumerable<ProjectAspNETv2.Models.Category>
+
+@{
+    ViewBag.Title = "Index";
+
+    Layout = "~/Views/Shared/_LayoutWelcomePage.cshtml";
+
+}
+
+<!--====== App Content ======-->
+<div class="container " style="margin-top:100px;">
+    <div class="row" style="padding:40px 30px; display:flex; justify-content:center; align-items:center; flex-direction:column;" style="width:100%;">
+        <div>
+            <h1 class="shop-w-master__heading u-s-m-b-30">
+
+                <span style="font-size:30px;">SPECIAL PRODUCTS</span>
+            </h1>
+
+        </div>
+
+        <div class="section__content col-sm-14" style="width:100%;">
+            <div class="container">
+                <div>
+
+                    <!--====== Tab 1 ======-->
+                    <div>
+                        <div class="slider-fouc">
+                            <div class="owl-carousel tab-slider" data-item="4">
+                                @foreach (var sp in ViewBag.specialProducts as IList<ProjectAspNETv2.Models.Produit>)
+                                {
+                                    if (sp.Promotion.Date_Validite > DateTime.Now && sp.Promotion.Date_Creation < DateTime.Now)
+                                    {
+                                        <div class="u-s-m-b-30">
+                                            <div class="product-o product-o--hover-on">
+                                                <div class="product-o__wrap">
+
+                                                    <a class="aspect aspect--bg-grey aspect--square u-d-block" >
+
+                                                        <img class="aspect__img" src="@Url.Content(sp.Images.ElementAt(0).PathName)" alt="">
+                                                    </a>
+                                                    <div class="product-o__action-wrap">
+                                                        <ul class="product-o__action-list">
+                                                            <li>
+
+                                                                <a data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip" href="/Welcome/Product/@sp.Id" target="_blank" data-placement="top" title="Show details"><i class="fas fa-info-circle"></i></a>
+                                                            </li>
+                                                            
+
+                                                        </ul>
+                                                    </div>
+                                                    <div style="position:absolute; top:0; background-color:orangered; color:#ffffff; float: right;">
+                                                        @sp.Promotion.Name
+                                                    </div>
+
+                                                </div>
+
+                                                <span class="product-o__category">
+
+                                                    <a href="#">@sp.Category.Name</a>
+                                                </span>
+
+                                                <span class="product-o__name">
+
+                                                    <a href="product-detail.html">@sp.name</a>
+                                                </span>
+                                                <div class="product-o__rating gl-rating-style">
+
+
+                                                    <span class="product-o__review" style="color: #ff9e14;"> Impressions (@sp.Vues.Count)</span>
+                                                </div>
+
+                                                <span class="product-o__price">
+                                                    MAD @(sp.price -(sp.price * sp.Promotion.Pourcentage / 100) )
+
+                                                    <span class="product-o__discount">MAD @sp.price</span>
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                    }
+
+
+                                }
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="row" style="padding:40px 30px; display:flex; justify-content:center; align-items:center; flex-direction:column;" style="width:100%;">
+        <div>
+            <h1 class="shop-w-master__heading u-s-m-b-30">
+
+                <span style="font-size:30px;">NEWEST PRODUCTS</span>
+            </h1>
+            
+        </div>
+        
+        <span >
+            <P>PRODUCTS WHOSE LIFTIME IS UNDER 7 DAYS</P>
+        </span>
+        
+            
+
+        <div class="section__content col-sm-14" style="width:100%;">
+            <div class="container">
+                <div>
+
+                    <!--====== Tab 1 ======-->
+                    <div>
+                        <div class="slider-fouc">
+                            <div class="owl-carousel tab-slider" data-item="4">
+                               
+                                @foreach (var newp in ViewBag.newestProducts as IList<ProjectAspNETv2.Models.Produit>)
+                                {
+                                    <div class="u-s-m-b-30">
+                                        <div class="product-o product-o--hover-on">
+                                            <div class="product-o__wrap">
+
+                                                <a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html">
+
+                                                    <img class="aspect__img" src="@Url.Content(newp.Images.First().PathName)" alt="">
+                                                </a>
+                                                <div class="product-o__action-wrap">
+                                                    <ul class="product-o__action-list">
+                                                        <li>
+
+                                                            <a data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip" data-placement="top" title="show details"><i class="fas fa-info-circle"></i></a>
+                                                        </li>
+                                                        
+
+                                                    </ul>
+                                                </div>
+                                                <div style="position:absolute; top:0; background-color:orangered; color:#ffffff; float: right;">
+                                                    NEW!
+                                                </div>
+                                            </div>
+
+                                            @*<span class="product-o__category">
+
+                        <a href="shop-side-version-2.html"></a>
+                    </span>*@
+
+                                            <span class="product-o__name">
+
+                                                <a href="product-detail.html">@newp.name</a>
+
+                                            </span>
+                                            <span style="color: #ff9e14;" class="product-o__category">
+
+                                                Impressions (@newp.Vues.Count)
+
+                                            </span>
+
+
+
+                                            <span class="product-o__price">
+                                                MAD@(newp.price)
+
+
+                                            </span>
+
+                                            <span class="product-o__category">
+
+                                                @newp.createdAt
+                                            </span>
+                                        </div>
+                                    </div>
+                                }
+
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!--====== TOP CATEGORIES ======-->
+
+    <div class="row " style="margin: 40px 0">
+
+
+        <div class="col-sm-3">
+
+
+            <div class="shop-w-master">
+                <h1 class="shop-w-master__heading u-s-m-b-30">
+                    <i class="fa fa-cubes u-s-m-r-8"></i>
+
+
+                    <span>ALL CATEGORIES</span>
+                </h1>
+                <div class="shop-w-master__sidebar sidebar--bg-snow">
+                    <div class="u-s-m-b-30">
+                        <div class="shop-w">
+                            <div class="shop-w__intro-wrap">
+                                <h1 class="shop-w__h">CATEGORY</h1>
+
+                                <span class="fas fa-minus shop-w__toggle" data-target="#s-category" data-toggle="collapse"></span>
+                            </div>
+                            <div class="shop-w__wrap collapse show" id="s-category">
+                                <ul class="shop-w__category-list gl-scroll">
+                                    @foreach (var category in ViewBag.AllCategories as IList<ProjectAspNETv2.Models.Category>)
+                                    {
+                                        <li class="has-list">
+
+                                            <a href="/Welcome/Shop?cat=@(category.CatId)" target="_blank">@category.Name</a>
+
+                                            <span class="category-list__text u-s-m-l-6">(@category.Produits.Count)</span>
+
+                                            <span class="js-shop-category-span is-expanded fas fa-plus u-s-m-l-6"></span>
+
+                                        </li>
+
+                                    }
+
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-9">
+            <h1 class="shop-w-master__heading u-s-m-b-30">
+                <i class="fa fa-cubes u-s-m-r-8"></i>
+                <span>TOP CATEGORIES</span>
+            </h1>
+            @foreach (var cat in Model)
+            {
+                <div class="p-5 bg-white rounded shadow mb-5" style="margin: 40px 0">
+                    <!-- Rounded tabs -->
+                    <div class="section__intro u-s-m-b-46">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="block">
+
+                                        <span class="block__title">@cat.Name</span>
+                                        <ul class="nav tab-list">
+                                            <li class="nav-item">
+
+                                                <a class="nav-link btn--e-white-brand-shadow active" data-toggle="tab" href="#latest@(cat.CatId)">LATEST PRODUCTS</a>
+                                            </li>
+                                            <li class="nav-item">
+
+                                                <a class="nav-link btn--e-white-brand-shadow " data-toggle="tab" href="#profile@(cat.CatId)">TOP TRENDING</a>
+                                            </li>
+                                            <li class="nav-item">
+
+                                                <a class="nav-link btn--e-white-brand-shadow" data-toggle="tab" href="#contact@(cat.CatId)">SPECIAL OFFERS</a>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="myTabContent" class="tab-content">
+                        <div id="latest@(cat.CatId)" role="tabpanel" aria-labelledby="home-tab" class="tab-pane fade px-4 py-5 active in show">
+
+                            <div class="section__content">
+                                <div class="container">
+                                    <div>
+
+                                        <!--====== Tab 1 ======-->
+                                        <div>
+                                            <div class="slider-fouc">
+                                                <div class="owl-carousel tab-slider" data-item="4">
+                                                    @foreach (var newp in ViewBag.NewProducts as IList<ProjectAspNETv2.Models.Produit>)
+                                                    {
+                                                        if (newp.categoryId == cat.CatId)
+                                                        {
+                                                            <div class="u-s-m-b-30">
+                                                                <div class="product-o product-o--hover-on">
+                                                                    <div class="product-o__wrap">
+
+                                                                        <a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html">
+
+                                                                            <img class="aspect__img" src="@Url.Content(newp.Images.First().PathName)" alt="">
+                                                                        </a>
+                                                                        <div class="product-o__action-wrap">
+                                                                            <ul class="product-o__action-list">
+                                                                                <li>
+
+                                                                                    <a data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip" data-placement="top" title="show details"><i class="fas fa-info-circle"></i></a>
+                                                                                </li>
+                                                                                
+
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    @*<span class="product-o__category">
+
+                                                                            <a href="shop-side-version-2.html"></a>
+                                                                        </span>*@
+
+                                                                    <span class="product-o__name">
+
+                                                                        <a href="product-detail.html">@newp.name</a>
+                                                                    </span>
+                                                                    <span style="color: #ff9e14;" class="product-o__category">
+
+                                                                        Impressions (@newp.Vues.Count)
+
+                                                                    </span>
+
+
+
+                                                                    <span class="product-o__price">
+                                                                        MAD@(newp.price)
+
+                                                                       
+                                                                    </span>
+
+                                                                    <span class="product-o__category">
+
+                                                                        @newp.createdAt
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+
+                                                        }
+
+                                                    }
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--====== End - Tab 1 ======-->
+                                        <!--====== End - Tab 4 ======-->
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div id="profile@(cat.CatId)" role="tabpanel" aria-labelledby="profile-tab" class="tab-pane fade px-4 py-5">
+                            <div class="section__content">
+                                <div class="container">
+                                    <div>
+
+                                        <!--====== Tab 1 ======-->
+                                        <div>
+                                            <div class="slider-fouc">
+                                                <div class="owl-carousel tab-slider" data-item="4">
+                                                    @foreach (var newp in ViewBag.hotProducts as IList<ProjectAspNETv2.Models.Produit>)
+                                                    {
+                                                        if (newp.categoryId == cat.CatId && newp.Vues.Count > 0)
+                                                        {
+                                                            <div class="u-s-m-b-30">
+                                                                <div class="product-o product-o--hover-on">
+                                                                    <div class="product-o__wrap">
+
+                                                                        <a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html">
+
+                                                                            <img class="aspect__img" src="@Url.Content(newp.Images.First().PathName)" alt="">
+                                                                        </a>
+                                                                        <div class="product-o__action-wrap">
+                                                                            <ul class="product-o__action-list">
+                                                                                <li>
+
+                                                                                    <a data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip" data-placement="top" title="show details"><i class="fas fa-info-circle"></i></a>
+                                                                                </li>
+                                                                               
+
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    @*<span class="product-o__category">
+
+                                                                            <a href="shop-side-version-2.html"></a>
+                                                                        </span>*@
+
+                                                                    <span class="product-o__name">
+
+                                                                        <a href="product-detail.html">@newp.name</a>
+                                                                    </span>
+                                                                    <span style="color: #ff9e14;" class="product-o__category">
+
+                                                                        Impressions (@newp.Vues.Count)
+
+                                                                    </span>
+
+
+
+                                                                    <span class="product-o__price">
+                                                                        MAD@(newp.price)
+
+                                                                        
+                                                                    </span>
+
+                                                                    <span class="product-o__category">
+
+                                                                        @newp.createdAt
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        }
+
+                                                    }
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--====== End - Tab 1 ======-->
+                                        <!--====== End - Tab 4 ======-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="contact@(cat.CatId)" role="tabpanel" aria-labelledby="contact-tab" class="tab-pane fade px-4 py-5">
+                            <div class="section__content">
+                                <div class="container">
+                                    <div>
+
+                                        <!--====== Tab 1 ======-->
+                                        <div>
+                                            <div class="slider-fouc">
+                                                <div class="owl-carousel tab-slider" data-item="4">
+
+                                                    @foreach (var sp in ViewBag.specialProducts as IList<ProjectAspNETv2.Models.Produit>)
+                                                    {
+                                                        if (sp.categoryId == cat.CatId && sp.Promotion.Date_Validite > DateTime.Now && sp.Promotion.Date_Creation < DateTime.Now)
+                                                        {
+                                                            <div class="u-s-m-b-30">
+                                                                <div class="product-o product-o--hover-on">
+                                                                    <div class="product-o__wrap">
+
+                                                                        <a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html">
+
+                                                                            <img class="aspect__img" src="@Url.Content(sp.Images.First().PathName)" alt="">
+                                                                        </a>
+                                                                        <div class="product-o__action-wrap">
+                                                                            <ul class="product-o__action-list">
+                                                                                <li>
+
+                                                                                    <a data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip" data-placement="top" title="show details"><i class="fas fa-info-circle"></i></a>
+                                                                                </li>
+                                                                              
+
+                                                                            </ul>
+                                                                        </div>
+                                                                        <div style="background-color:#ff6a00; color:white; padding:3px 5px">
+                                                                            <p style="margin:0 auto; font-weight:bold;">@sp.Promotion.Name</p>
+                                                                        </div>
+
+                                                                    </div>
+
+                                                                    <span class="product-o__category">
+
+                                                                        <a href="#">@sp.Category.Name</a>
+                                                                    </span>
+
+                                                                    <span class="product-o__name">
+
+                                                                        <a href="product-detail.html">@sp.name</a>
+                                                                    </span>
+                                                                    <div class="product-o__rating gl-rating-style">
+
+
+                                                                        <span class="product-o__review" style="color: #ff9e14;"> Impressions (@sp.Vues.Count)</span>
+                                                                    </div>
+
+                                                                    <span class="product-o__price">
+                                                                        MAD @(sp.price -(sp.price * sp.Promotion.Pourcentage / 100) )
+
+                                                                        <span class="product-o__discount">MAD @sp.price</span>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+
+                                                        }
+
+                                                    }
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--====== End - Tab 1 ======-->
+                                        <!--====== End - Tab 4 ======-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End rounded tabs -->
+                </div>
+            }
+
+        </div>
+    </div>
+
+
+</div>

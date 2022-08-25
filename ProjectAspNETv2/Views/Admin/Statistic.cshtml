@@ -1,0 +1,135 @@
+﻿
+@{
+    ViewBag.Title = "Statistic";
+    Layout = "~/Views/Shared/_LayoutPageDashboard1.cshtml";
+
+}
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <script>
+window.onload = function () {
+
+var chart = new CanvasJS.Chart("chartContainer", {
+	animationEnabled: true,
+	theme: "light2", // "light1", "light2", "dark1", "dark2"
+	title: {
+        text: "Les vues des biens par rapport les jours pour le propriétaire sélectionné"
+    },
+    axisX: {
+        title: " Les 7  derniers jours"
+    },
+	axisY: {
+		title: " Vues"
+	},
+	data: [{
+        type: "line",
+		dataPoints: @Html.Raw(ViewBag.DataPoints)
+	}]
+});
+
+    chart.render();
+
+    var chart2 = new CanvasJS.Chart("chartContainer2", {
+	animationEnabled: true,
+	theme: "light2", // "light1", "light2", "dark1", "dark2"
+	title: {
+        text: "Les vues par rapport les categories pour le propriétaire sélectionné"
+        },
+        axisX: {
+            title: " Les Categories "
+        },
+	axisY: {
+		title: "Vues"
+	},
+	data: [{
+        type: "line",
+		dataPoints: @Html.Raw(ViewBag.DataPoints2)
+	}]
+});
+
+chart2.render();
+
+}
+    </script>
+
+
+
+
+</head>
+
+
+
+
+<div class="col-sm-12">
+    <h5 class="mt-4">les demandes d'inscription par jours</h5>
+
+    <img src="@Url.Action("MyChart")" />
+    <hr>
+
+   
+    <div class="tab-content">
+        <h3> Selectionner  un proprietaire pour voir leur statistiques: </h3>  <br />
+        @using (Html.BeginForm("Get_Seller_Statistics", "Admin", FormMethod.Get))
+        {
+
+            <div class="input-group mb-3" style="background-color:white">
+                <div style="margin-left:25px" class="input-group-prepend">
+
+                    <input class="btn btn-outline-primary" type="submit" value="Voir" />
+                </div>
+
+                @Html.DropDownList("e", "Select Seller")
+
+
+            </div>
+        }
+    </div>
+
+    <ul class="nav nav-pills mb-3" id="pills-tab" role="tablist">
+
+        <li class="nav-item">
+            <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Vues/Category</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false"> Vues/Jours</a>
+        </li>
+
+    </ul>
+    <div class="tab-content" id="pills-tabContent">
+        <div class="tab-pane fade show active" id="pills-home" role="tabpanel">
+
+            <div id="chartContainer" style="height: 370px; width: 100%;"></div>
+
+
+
+
+
+
+        </div>
+        <div class="tab-pane fade" id="pills-profile" role="tabpanel">
+
+            <div>
+
+                <div id="chartContainer2" style="height: 370px; width: 100%;"></div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+
+
+
+
+
+</html>

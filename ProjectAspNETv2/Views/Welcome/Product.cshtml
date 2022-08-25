@@ -1,0 +1,278 @@
+﻿@model ProjectAspNETv2.Models.Produit
+@using System.Linq;
+
+@{
+    ViewBag.Title = "Product";
+    Layout = "~/Views/Shared/_LayoutWelcomePage.cshtml";
+}
+
+<!--====== App Content = =====-->
+<div class="app-content" style="margin-top:150px;background-color:white;">
+
+    <!--====== Section 1 ======-->
+    <div class="u-s-p-t-90">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-5">
+
+                    <!--====== Product Breadcrumb ======-->
+                    <div class="pd-breadcrumb u-s-m-b-30">
+                        <ul class="pd-breadcrumb__list">
+                            <li class="has-separator">
+
+                                <a href="@Url.Action("Index" , "Welcome")">Home</a>
+                            </li>
+                            <li class="has-separator">
+
+                                <a href="shop-side-version-2.html">@Model.Category.Name</a>
+                            </li>
+                            <li class="is-marked">
+
+                                <a href="@Url.Action("Product" , "Welcome" , new { id = Model.Id })">@(Model.name.Substring(0,8))...</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <!--====== End - Product Breadcrumb ======-->
+                    <!--====== Product Detail Zoom ======-->
+                    <div class="pd u-s-m-b-30">
+                        <div class="slider-fouc pd-wrap">
+                            <div id="pd-o-initiate">
+                                @foreach (var image in Model.Images)
+                                {
+                                    <div class="pd-o-img-wrap" data-src="https://localhost:44304@(Url.Content(image.PathName))">
+                                        <img class="u-img-fluid" src="https://localhost:44304@(Url.Content(image.PathName))" data-zoom-image="https://localhost:44304@(Url.Content(image.PathName))" alt="">
+                                    </div>
+                                }
+                            </div>
+
+                            <span class="pd-text">Click for larger zoom</span>
+                        </div>
+                        <div class="u-s-m-t-15">
+                            <div class="slider-fouc">
+                                <div id="pd-o-thumbnail">
+                                    @foreach (var image in Model.Images)
+                                    {
+                                        <div>
+
+                                            <img class="u-img-fluid" src="@Url.Content(image.PathName)" alt="">
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--====== End - Product Detail Zoom ======-->
+                </div>
+                <div class="col-lg-7">
+
+                    <!--====== Product Right Side Details ======-->
+                    <div class="pd-detail">
+                        <div>
+
+                            <span class="pd-detail__name"><strong>@Model.name</strong></span>
+                        </div>
+                        <div>
+                            <div class="pd-detail__inline">
+
+                                <span class="pd-detail__price">@Model.price Dhs</span>
+
+                                <span class="pd-detail__discount"></span><del class="pd-detail__del"></del>
+                            </div>
+                        </div>
+                        <div class="u-s-m-b-15">
+
+                            <span class="pd-detail__preview-desc">@Model.description_</span>
+                        </div>
+                        <div class="u-s-m-b-15">
+
+                            <span class="pd-detail__label u-s-m-b-8">Product Policy:</span>
+                            <ul class="pd-detail__policy-list">
+                                <li>
+                                    <i class="fas fa-check-circle u-s-m-r-8"></i>
+
+                                    <span>Buyer Protection.</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-check-circle u-s-m-r-8"></i>
+
+                                    <span>Full Refund if you don't receive your order.</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-check-circle u-s-m-r-8"></i>
+
+                                    <span>Returns accepted if product not as described.</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="u-s-m-b-15">
+
+                            <span class="pd-detail__label u-s-m-b-8">Informations du vendeur:</span>
+                            <ul class="pd-detail__policy-list">
+                                <li>
+                                    <i class="fas fa-at u-s-m-r-8"></i>
+
+                                    <span>@Model.Proprietaire.AspNetUser.Email</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-phone-volume u-s-m-r-8"></i>&nbsp;
+
+                                    <span>@Model.Proprietaire.Tel</span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-university u-s-m-r-8"></i>
+
+                                    <span>@Model.Proprietaire.Ville</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="u-s-m-b-15">
+
+                            <span class="pd-detail__label u-s-m-b-8">Details</span>
+                            <ul class="pd-detail__policy-list">
+                                <li>
+                                    <i class="fas fa-truck u-s-m-r-8"></i>
+
+                                    <span>
+                                        Livraison :
+                                        @if ((bool)Model.livrable == true)
+                                        {
+                                            <span>Free Shipping</span>
+                                        }
+                                        else
+                                        {
+                                            <span>No Shipping</span>
+
+                                        }
+                                    </span>
+                                </li>
+                                <li>
+                                    <i class="fas fa-fist-raised  u-s-m-r-8"></i>&nbsp;&nbsp;
+                                    <span>
+                                        Garantie :
+                                        @if ((bool)Model.garantee == true)
+                                        {
+                                            <span>Avec</span>
+                                        }
+                                        else
+                                        {
+                                            <span>Sans</span>
+
+                                        }
+                                    </span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!--====== End - Product Right Side Details ======-->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="u-s-p-b-90">
+
+        <!--====== Section Intro ======-->
+        <div class="section__intro u-s-m-b-46">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="section__text-wrap">
+                            <h1 class="section__heading u-c-secondary u-s-m-b-12">YOU MAY ALSO LIKE</h1>
+
+                            <span class="section__span u-c-grey">RELATED PRODUCTS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--====== End - Section Intro ======-->
+        <!--====== Section Content ======-->
+        <div class="section__content">
+            <div class="container">
+                <div class="slider-fouc">
+
+                    <div class="owl-carousel product-slider" data-item="4">
+                        @foreach (ProjectAspNETv2.Models.Produit product in ViewBag.RelatedProducts)
+                        {
+                            
+                            <div class="u-s-m-b-30">
+                                <div class="product-o product-o--hover-on">
+                                    <div class="product-o__wrap">
+
+                                        <a class="aspect aspect--bg-grey aspect--square u-d-block" href="product-detail.html">
+
+                                            <img class="aspect__img" src="@Url.Content(product.Images.First().PathName)" alt="@product.name">
+                                        </a>
+                                        <div class="product-o__action-wrap">
+                                            <ul class="product-o__action-list">
+                                                <li>
+
+                                                    <a data-modal="modal" data-modal-id="#add-to-cart" data-tooltip="tooltip" data-placement="top" title="Show details" href="/Welcome/Product/@product.Id"><i class="fas fa-info-circle"></i></a>
+                                                </li>
+                                                @if (product.Proprietaire.Id == ViewBag.CurrentSeller?.Id && User.Identity.IsAuthenticated)
+                                                {
+                                                    <li>
+
+                                                        <a data-modal="modal" data-modal-id="#quick-look" data-tooltip="tooltip" title="Edit Product" data-placement="top" href="/Produits/Edit/@product.Id"><i class="far fa-edit"></i></a>
+                                                    </li>
+
+                                                }
+
+
+
+                                            </ul>
+                                        </div>
+                                    </div>
+
+                                    <span class="product-o__category">
+                                        @product.Category.Name
+                                    </span>
+
+                                    <span class="product-o__name">
+
+                                        <a href="/Welcome/Product/@product.Id">@product.name</a>
+                                    </span>
+                                    <div class="product-o__rating gl-rating-style">
+                                        <span>Seller : @product.Proprietaire.Name &nbsp;&nbsp;</span>
+                                        <span style="color:green;">
+
+                                            <i class="fa fa-check" aria-hidden="true"></i>
+                                        </span>
+
+                                        @if (product.Proprietaire.Id == ViewBag.CurrentSeller?.Id && User.Identity.IsAuthenticated)
+                                        {
+                                            <div style="color: #fa4400;">
+                                                <i class="fas fa-user"></i>my product
+                                                <span style="color: #15aabf; float:right; ">
+                                                    <a href="/Produits/Edit/@product.Id">
+                                                        <i style="font-size: 18px;" class="far fa-edit"></i>
+                                                    </a>
+                                                </span>
+
+
+                                            </div>
+                                        }
+                                    </div>
+
+                                    <span class="product-o__price">
+                                        MAD @((float)product.price)
+
+                                        <span class="product-o__discount">MAD 0</span>
+                                    </span>
+                                </div>
+                            </div>
+
+                        }
+
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--====== End - Section Content ======-->
+    </div>
+    <!--====== End - Section 1 ======-->
+</div>
+<!--====== End - App Content ======-->
